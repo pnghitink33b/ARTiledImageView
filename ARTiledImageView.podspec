@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.author           = { "dblock" => "dblock@dblock.org", "orta" => "orta.therox@gmail.com" }
   s.source           = { :git => "https://github.com/dblock/ARTiledImage.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/dblockdotorg'
-  s.platform         = :ios, '5.0'
+  s.platform         = :ios, '10.0'
   s.requires_arc     = true
   s.source_files     = 'Classes'
   s.frameworks       = 'Foundation', 'UIKit', 'CoreGraphics'

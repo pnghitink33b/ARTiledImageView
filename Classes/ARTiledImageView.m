@@ -167,52 +167,55 @@
         }
 
         id <SDWebImageOperation> operation = nil;
-        operation = [SDWebImageManager.sharedManager downloadWithURL:tileURL options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+        operation = [SDWebImageManager.sharedManager loadImageWithURL:tileURL options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
             if (!wself || !finished) {
                 return;
             }
-
+            
             if (error) {
                 // TODO: we want to mke sure this doesn't happen multiple times
                 [wself performSelector:_cmd withObject:urls afterDelay:1];
                 return;
             }
-
+            
             void (^block)(void) = ^{
                 __strong typeof (wself) sself = wself;
                 if (!sself) {
                     return;
                 }
-
+                
                 if (image) {
                     ARTile *tile = [sself.tileCache objectForKey:tileCacheKey];
                     if (!tile) {
                         return;
                     }
-
+                    
                     tile.tileImage = image;
                     [sself setNeedsDisplayInRect:tile.tileRect];
-
+                    
                     // Overwrite the existing object in cache now that we have a real cost
                     NSInteger cost = image.size.height * image.size.width * image.scale;
                     [sself.tileCache setObject:tile forKey:tileCacheKey cost:cost];
-
+                    
                     if ([sself.dataSource respondsToSelector:@selector(tiledImageView:didDownloadTiledImage:atURL:)]) {
                         [sself.dataSource tiledImageView:self didDownloadTiledImage:image atURL:tileURL];
                     }
                 }
-
+                
                 @synchronized (sself.downloadOperations) {
                     [sself.downloadOperations removeObjectForKey:tileCacheKey];
                 }
             };
-
+            
             if ([NSThread isMainThread]) {
                 block();
             } else {
                 dispatch_sync(dispatch_get_main_queue(), block);
             }
         }];
+//        operation = [SDWebImageManager.sharedManager downloadWithURL:tileURL options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+//
+//        }];
 
         @synchronized (self.downloadOperations) {
             [self.downloadOperations setObject:operation forKey:tileCacheKey];

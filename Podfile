@@ -1,12 +1,14 @@
-workspace 'ARTiledImageView'
+platform :ios, '10.0'
+#workspace 'ARTiledImageView'
 
-pod 'ARTiledImageView', :path => 'ARTiledImageView.podspec'
 
-target 'IntegrationTests' do
-  pod 'Specta'
-  pod 'Expecta'
-  pod 'FBSnapshotTestCase'
-  pod 'Expecta+Snapshots'
+
+target 'Demo' do
+  pod 'ARTiledImageView', :path => 'ARTiledImageView.podspec'
+  #pod 'Specta'
+  #pod 'Expecta'
+  #pod 'FBSnapshotTestCase'
+  #pod 'Expecta+Snapshots'
 end
 
 use_frameworks!
