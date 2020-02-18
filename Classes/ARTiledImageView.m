@@ -71,7 +71,17 @@
     CGFloat _scaleX = CGContextGetCTM(context).a;
     CGFloat _scaleY = CGContextGetCTM(context).d;
 
-    CATiledLayer *tiledLayer = (CATiledLayer *) [self layer];
+    __block CATiledLayer *tiledLayer;
+    __block CGRect bounds;
+    if (NSThread.isMainThread) {
+        tiledLayer = (CATiledLayer *) [self layer];
+        bounds = self.bounds;
+    } else {
+         dispatch_sync(dispatch_get_main_queue(), ^(void) {
+             tiledLayer = (CATiledLayer *) [self layer];
+             bounds = self.bounds;
+         });
+    }
     CGSize tileSize = tiledLayer.tileSize;
 
     //
@@ -109,7 +119,7 @@
             NSString *tileCacheKey = [NSString stringWithFormat:@"%@/%@_%@", @(level), @(col), @(row)];
             ARTile *tile = [self.tileCache objectForKey:tileCacheKey];
             if (!tile) {
-                tileRect = CGRectIntersection(self.bounds, tileRect);
+                tileRect = CGRectIntersection(bounds, tileRect);
                 tile = [[ARTile alloc] initWithImage:tileImage rect:tileRect];
                 [self.tileCache setObject:tile forKey:tileCacheKey cost:level];
             }

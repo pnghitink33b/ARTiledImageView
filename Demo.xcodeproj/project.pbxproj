@@ -30,13 +30,6 @@
 		3CB0E6D818C8B9E2009CE8DB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3CB0E6DA18C8B9E2009CE8DB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3CB0E6F518C8B9E2009CE8DB /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		3CB0E6FD18C8B9E3009CE8DB /* IntegrationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IntegrationTests-Info.plist"; sourceTree = "<group>"; };
-		3CB0E6FF18C8B9E3009CE8DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3CB0E72B18C8BD61009CE8DB /* IntegrationTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IntegrationTests-Prefix.pch"; sourceTree = "<group>"; };
-		3CB8E36318D4DEA40023AB71 /* ARMasterViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMasterViewControllerTests.m; sourceTree = "<group>"; };
-		3CB8E36418D4DEA40023AB71 /* ARTiledImageViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTiledImageViewControllerTests.m; sourceTree = "<group>"; };
-		3CB8E36518D4DEA40023AB71 /* ARWebTiledImageDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARWebTiledImageDataSourceTests.m; sourceTree = "<group>"; };
-		3CB8E5C018D629C00023AB71 /* ARLocalTiledImageDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARLocalTiledImageDataSourceTests.m; sourceTree = "<group>"; };
 		3CBB03A9192BD83800689F89 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		3CBB03AA192BD83800689F89 /* CONTRIBUTING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CONTRIBUTING.md; sourceTree = "<group>"; };
 		3CBB03AB192BD83800689F89 /* Gemfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
@@ -44,10 +37,8 @@
 		3CBB03AD192BD83800689F89 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		3CBB03AE192BD83800689F89 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		45C2FF79945A072B3EFF39DB /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5EA9D66B199CBFF5008CF9C7 /* ARTiledImageViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTiledImageViewTests.m; sourceTree = "<group>"; };
 		6045F8510617FF41DDDCB90A /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		60893D64196EABB0009C23E8 /* ARTiledImageView.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = ARTiledImageView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		60893D65196EDFD3009C23E8 /* ARTiledImageScrollViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARTiledImageScrollViewSpec.m; sourceTree = "<group>"; };
 		9DFB91B06AB88920EE4914D6 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		A682075DC78EA1F60DB02AA8 /* Pods_IntegrationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IntegrationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBA5800D1AF0D87B4D730E59 /* Pods-IntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntegrationTests.debug.xcconfig"; path = "Target Support Files/Pods-IntegrationTests/Pods-IntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -82,7 +73,6 @@
 		3CB0E6CA18C8B9E2009CE8DB = {
 			isa = PBXGroup;
 			children = (
-				3CB0E6FB18C8B9E3009CE8DB /* IntegrationTests */,
 				34B5886123FBADF600444FB7 /* Demo */,
 				3CB0E6D518C8B9E2009CE8DB /* Frameworks */,
 				3CB0E6D418C8B9E2009CE8DB /* Products */,
@@ -116,30 +106,6 @@
 				45C2FF79945A072B3EFF39DB /* Pods_Demo.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3CB0E6FB18C8B9E3009CE8DB /* IntegrationTests */ = {
-			isa = PBXGroup;
-			children = (
-				3CB8E36318D4DEA40023AB71 /* ARMasterViewControllerTests.m */,
-				3CB8E36418D4DEA40023AB71 /* ARTiledImageViewControllerTests.m */,
-				3CB8E36518D4DEA40023AB71 /* ARWebTiledImageDataSourceTests.m */,
-				3CB0E6FC18C8B9E3009CE8DB /* Supporting Files */,
-				3CB8E5C018D629C00023AB71 /* ARLocalTiledImageDataSourceTests.m */,
-				60893D65196EDFD3009C23E8 /* ARTiledImageScrollViewSpec.m */,
-				5EA9D66B199CBFF5008CF9C7 /* ARTiledImageViewTests.m */,
-			);
-			path = IntegrationTests;
-			sourceTree = "<group>";
-		};
-		3CB0E6FC18C8B9E3009CE8DB /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				3CB0E72B18C8BD61009CE8DB /* IntegrationTests-Prefix.pch */,
-				3CB0E6FD18C8B9E3009CE8DB /* IntegrationTests-Info.plist */,
-				3CB0E6FE18C8B9E3009CE8DB /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		FA633FF04F2221A3B0C8D7E7 /* Pods */ = {
@@ -298,14 +264,6 @@
 				34B5886E23FBADF700444FB7 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		3CB0E6FE18C8B9E3009CE8DB /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3CB0E6FF18C8B9E3009CE8DB /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

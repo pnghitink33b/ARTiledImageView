@@ -62,7 +62,10 @@ class ViewController: UIViewController {
         }
         
         
+//        let scrollView = ARTiledImageScrollView(
+//            frame: .init(origin: .zero, size: .init(width: view.frame.width, height: view.frame.width*(1/imageRatio))))
         let scrollView = ARTiledImageScrollView(frame: self.view.bounds)
+        scrollView.contentMode = .scaleAspectFit
         scrollView.dataSource = localDataSource
         scrollView.backgroundColor = .gray
         if #available(iOS 11.0, *) {
@@ -71,8 +74,17 @@ class ViewController: UIViewController {
             // Fallback on earlier versions
         }
 //        sv.displayTileBorders = true
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
          self.view.addSubview(scrollView)
+//        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            scrollView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
+//            scrollView.heightAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1/imageRatio),
+//            scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//        ])
+        scrollView.contentInset = .init(top: 100, left: 0, bottom: 100, right: 0)
+        scrollView.zoom(toFit: false)
+        
 //        if useWidth {
 //            NSLayoutConstraint.activate([
 //                scrollView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
