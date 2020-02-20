@@ -7,8 +7,17 @@
 //
 
 #import "ARTiledImageViewDataSource.h"
+#import "ARTiledImageView.h"
+#import "ARImageBackedTiledView.h"
+
+@protocol ARTiledImageScrollViewDelegate;
+
 
 @interface ARTiledImageScrollView : UIScrollView <UIScrollViewDelegate>
+
+@property (nonatomic, weak, readonly) ARImageBackedTiledView *imageBackedTiledImageView;
+
+@property(nonatomic,weak) id<ARTiledImageScrollViewDelegate> _Nullable        tiledImageScrollViewDelegate;
 
 /// Current tile zoom level.
 @property (nonatomic, readonly, assign) NSInteger tileZoomLevel;
@@ -54,5 +63,19 @@
 
 /// Automatically sets the zoom min & max for current bounds.
 - (void)setMaxMinZoomScalesForCurrentBounds;
+
+///inset
+@property (nonatomic, assign) UIEdgeInsets tiledInset;
+
+@end
+
+
+@protocol ARTiledImageScrollViewDelegate <NSObject>
+
+@optional
+- (void)tiledImageScrollViewDidScroll:(ARTiledImageScrollView *_Nonnull)scrollView; // any offset changes
+- (void)tiledImageScrollViewDidZoom:(ARTiledImageScrollView *_Nonnull)scrollView; // any zoom scale changes
+- (void)tiledImageScrollViewDidEndZooming:(ARTiledImageScrollView *_Nonnull)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale;
+
 
 @end

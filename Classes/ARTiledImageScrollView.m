@@ -14,11 +14,17 @@
 
 const CGFloat ARTiledImageScrollViewDefaultZoomStep = 1.5;
 
-@interface ARTiledImageScrollView ()
-@property (nonatomic, weak, readonly) ARImageBackedTiledView *imageBackedTiledImageView;
-@end
+//@interface ARTiledImageScrollView ()
+//@property (nonatomic, weak, readonly) ARImageBackedTiledView *imageBackedTiledImageView;
+//@end
 
 @implementation ARTiledImageScrollView
+
+- (void)setTiledInset:(UIEdgeInsets)tiledInset {
+    _tiledInset = tiledInset;
+    [self centerContent];
+    
+}
 
 - (void)setDataSource:(NSObject <ARTiledImageViewDataSource> *)dataSource
 {
@@ -107,8 +113,23 @@ const CGFloat ARTiledImageScrollViewDefaultZoomStep = 1.5;
     }
 
     [self centerContent];
+    
+    if (_tiledImageScrollViewDelegate != nil && [_tiledImageScrollViewDelegate respondsToSelector:@selector(tiledImageScrollViewDidZoom:)]) {
+        [_tiledImageScrollViewDelegate tiledImageScrollViewDidZoom:self];
+    }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (_tiledImageScrollViewDelegate != nil && [_tiledImageScrollViewDelegate respondsToSelector:@selector(tiledImageScrollViewDidScroll:)]) {
+        [_tiledImageScrollViewDelegate tiledImageScrollViewDidZoom:self];
+    }
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+    if (_tiledImageScrollViewDelegate != nil && [_tiledImageScrollViewDelegate respondsToSelector:@selector(tiledImageScrollViewDidEndZooming:withView:atScale:)]) {
+        [_tiledImageScrollViewDelegate tiledImageScrollViewDidEndZooming:self withView:view atScale:scale];
+    }
+}
 
 - (void)tileZoomLevelDidChange
 {
@@ -178,7 +199,7 @@ const CGFloat ARTiledImageScrollViewDefaultZoomStep = 1.5;
     if (self.contentSize.height < self.bounds.size.height) {
         top = (self.bounds.size.height-self.contentSize.height) * 0.5f;
     }
-    self.contentInset = UIEdgeInsetsMake(top, left, top, left);
+    self.contentInset = UIEdgeInsetsMake(top + self.tiledInset.top, left + self.tiledInset.left, top + self.tiledInset.bottom, left +  + self.tiledInset.right);
 }
 
 

@@ -9,9 +9,24 @@
 import UIKit
 import ARTiledImageView
 
-class ViewController: UIViewController {
-    var _ds: ARTiledImageViewDataSource?
+class MarkerView: UIImageView {
+    let mapPosition: CGPoint
+    init(frame: CGRect, mapPosition: CGPoint) {
+        self.mapPosition = mapPosition
+        super.init(frame: frame)
+        self.image = #imageLiteral(resourceName: "stageinformation")
+        self.sizeToFit()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
+class ViewController: UIViewController, ARTiledImageScrollViewDelegate {
+    var _ds: ARTiledImageViewDataSource?
+    var _scrollView: ARTiledImageScrollView!
+    var markerViews: [MarkerView] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -32,74 +47,71 @@ class ViewController: UIViewController {
 //        ds.tileBaseURL = URL(string: "https://raw.github.com/dblock/ARTiledImageView/master/Demo/Tiles/SenoraSabasaGarcia/tiles")
 //        // make sure to retain the datasource
 //        _ds = ds
+        //
+//        let localDataSource = ARLocalTiledImageDataSource()
+//        var resourceURL = Bundle.main.resourceURL!
+//        resourceURL.appendPathComponent("Tiles/Sample30MB/tiles")
+//        localDataSource.tileBasePath = resourceURL.path
         
-        let localDataSource = ARLocalTiledImageDataSource()
-        var resourceURL = Bundle.main.resourceURL!
-        resourceURL.appendPathComponent("Tiles/Wallpaper/tiles")
-        localDataSource.tileBasePath = resourceURL.path
+        let localDataSource = ARWebTiledImageDataSource()
+        localDataSource.tileBaseURL = URL(string: "https://raw.githubusercontent.com/pnghitink33b/ARTiledImageView/master/Demo/Tiles/Wallpaper/tiles")
         
-        let size = CGSize(width: 15360, height: 8640) //CGSizeMake(2383, 2933)
+        let size = CGSize(width: 13583, height: 5417) //CGSizeMake(2383, 2933)
         localDataSource.maxTiledHeight = Int(size.height)
         localDataSource.maxTiledWidth = Int(size.width)
-        localDataSource.minTileLevel = 1;
+        localDataSource.minTileLevel = 0;
         localDataSource.maxTileLevel = 14;
-        localDataSource.tileSize = 256
+        localDataSource.tileSize = 512
         localDataSource.tileFormat = "jpg"
         _ds = localDataSource
         
+
+        let scrollView = ARTiledImageScrollView(frame: self.view.bounds.insetBy(dx: 10, dy: 10))
+        _scrollView = scrollView
+        scrollView.tiledImageScrollViewDelegate = self
+        scrollView.clipsToBounds = false
+        scrollView.centerOnZoomOut = true
+//        scrollView.imagePadding = .init(top: 10, left: 10, bottom: 10, right: 10)
         
-        let viewRatio = self.view.bounds.width/self.view.bounds.height
-        let imageRatio = size.width/size.height
-            
-        let useWidth: Bool
-        switch (viewRatio, imageRatio) {
-        case (let x, let y) where x >= y:
-            useWidth = false
-        case (let x, let y) where x < y:
-            useWidth = true
-        default:
-            fatalError("Imposiblee case")
-        }
-        
-        
-//        let scrollView = ARTiledImageScrollView(
-//            frame: .init(origin: .zero, size: .init(width: view.frame.width, height: view.frame.width*(1/imageRatio))))
-        let scrollView = ARTiledImageScrollView(frame: self.view.bounds)
         scrollView.contentMode = .scaleAspectFit
         scrollView.dataSource = localDataSource
-        scrollView.backgroundColor = .gray
+        scrollView.backgroundColor = .clear
+        scrollView.displayTileBorders = true
         if #available(iOS 11.0, *) {
             scrollView.contentInsetAdjustmentBehavior = .never
-        } else {
-            // Fallback on earlier versions
         }
 //        sv.displayTileBorders = true
          self.view.addSubview(scrollView)
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            scrollView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
-//            scrollView.heightAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1/imageRatio),
-//            scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            scrollView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-//        ])
-        scrollView.contentInset = .init(top: 100, left: 0, bottom: 100, right: 0)
+//        scrollView.tiledInset = .init(top: 100, left: 100, bottom: 100, right: 100)
         scrollView.zoom(toFit: false)
         
-//        if useWidth {
-//            NSLayoutConstraint.activate([
-//                scrollView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
-//                scrollView.heightAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1/imageRatio)
-//            ])
-//        } else {
-//            NSLayoutConstraint.activate([
-//                scrollView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
-//                scrollView.widthAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: imageRatio)
-//            ])
-//        }
-//
-//        scrollView.widthAnchor.cen
+        let markerView = MarkerView(frame: .init(origin: .zero, size: .init(width: 10, height: 10)), mapPosition: .init(x: 5780, y: 1267))
+//        markerView.backgroundColor = .red
+        markerViews.append(markerView)
+        view.addSubview(markerView)
+        updateMarkerPosition()
     }
 
+    func tiledImageScrollViewDidScroll(_ scrollView: ARTiledImageScrollView) {
+        updateMarkerPosition()
+    }
+    
+    func tiledImageScrollViewDidZoom(_ scrollView: ARTiledImageScrollView) {
+        updateMarkerPosition()
+    }
 
+    func tiledImageScrollViewDidEndZooming(_ scrollView: ARTiledImageScrollView, with view: UIView?, atScale scale: CGFloat) {
+        updateMarkerPosition()
+    }
+    
+    func updateMarkerPosition() {
+        guard let tiledImageView = _scrollView.imageBackedTiledImageView?.tiledImageView else {
+            return
+        }
+        markerViews.forEach { markerView in
+            let origin = self.view.convert(markerView.mapPosition, from: tiledImageView)
+            markerView.frame.origin = origin
+        }
+    }
 }
 
