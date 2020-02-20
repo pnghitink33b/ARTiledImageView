@@ -54,7 +54,7 @@ class ViewController: UIViewController, ARTiledImageScrollViewDelegate {
 //        localDataSource.tileBasePath = resourceURL.path
         
         let localDataSource = ARWebTiledImageDataSource()
-        localDataSource.tileBaseURL = URL(string: "https://raw.githubusercontent.com/pnghitink33b/ARTiledImageView/master/Demo/Tiles/Wallpaper/tiles")
+        localDataSource.tileBaseURL = URL(string: "https://raw.githubusercontent.com/pnghitink33b/ARTiledImageView/master/Demo/Tiles/Sample30MB/tiles")
         
         let size = CGSize(width: 13583, height: 5417) //CGSizeMake(2383, 2933)
         localDataSource.maxTiledHeight = Int(size.height)
